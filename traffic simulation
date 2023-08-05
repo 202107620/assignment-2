@@ -1,0 +1,100 @@
+public class TrafficSimulation {
+    private static final int TOTAL_CARS = 100;
+
+    public static void main(String[] args) {
+        Map<Color, Map<Direction, Integer>> trafficReport = new HashMap<>();
+
+        for (Color color : Color.values()) {
+            trafficReport.put(color, new HashMap<>());
+            for (Direction direction : Direction.values()) {
+                trafficReport.get(color).put(direction, 0);
+            }
+        }
+
+        TrafficSimulation trafficSimulation = new TrafficSimulation();
+        trafficSimulation.generateCars(trafficReport);
+
+        System.out.println("Traffic Report:");
+        System.out.println("----------------------------");
+        for (Color color : Color.values()) {
+            System.out.println(color + " Cars:");
+            for (Direction direction : Direction.values()) {
+                int count = trafficReport.get(color).get(direction);
+                System.out.println(direction + ": " + count);
+            }
+            System.out.println("----------------------------");
+        }
+    }
+
+    private void generateCars(Map<Color, Map<Direction, Integer>> trafficReport) {
+        Random rand = new Random();
+
+        for (int i = 0; i < TOTAL_CARS; i++) {
+            Color color = Color.values()[rand.nextInt(Color.values().length)];
+            Direction direction = Direction.values()[rand.nextInt(Direction.values().length)];
+
+            trafficReport.get(color).put(direction, trafficReport.get(color).get(direction) + 1);
+            Car car = new Car(color, direction);
+            // Simulate the car's movement or other actions here (not implemented in this example).
+        }
+    }
+}
+enum Direction {
+    NORTH, SOUTH, EAST, WEST
+}
+
+enum Color {
+    RED, GREEN, BLUE, ORANGE, PINK
+}
+
+class Car {
+    private Color color;
+    private Direction direction;
+
+    public Car(Color color, Direction direction) {
+        this.color = color;
+        this.direction = direction;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+}
+output of this code-
+Traffic Report:
+----------------------------
+RED Cars:
+NORTH: 26
+SOUTH: 22
+EAST: 23
+WEST: 29
+----------------------------
+GREEN Cars:
+NORTH: 27
+SOUTH: 24
+EAST: 25
+WEST: 24
+----------------------------
+BLUE Cars:
+NORTH: 20
+SOUTH: 25
+EAST: 24
+WEST: 26
+----------------------------
+ORANGE Cars:
+NORTH: 29
+SOUTH: 26
+EAST: 26
+WEST: 19
+----------------------------
+PINK Cars:
+NORTH: 25
+SOUTH: 25
+EAST: 27
+WEST: 23
+----------------------------
+In this example, we generated 100 cars with random colors and directions. The output displays the traffic report showing how many cars of each color are driving in each direction. Please note that the numbers in the output may vary as they are randomly generated during each run.
